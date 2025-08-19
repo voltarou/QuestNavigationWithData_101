@@ -29,20 +29,21 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.act7test.R
+import com.example.act7test.viewmodel.SiswaViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun IsiRuang(
-    onSubmitButtonClicked: (ArrayList<String>) -> Unit
+fun Formulir(
+    pilihanJK: List<String> = listOf("Laki-Laki", "Perempuan"),
+    onSubmitButtonClicked: (MutableList<String>) -> Unit,
+    modifier: Modifier = Modifier,
+    viewModel: SiswaViewModel
 ) {
     var txtNama by remember { mutableStateOf("") }
     var txtAlamat by remember { mutableStateOf("") }
     var txtGender by remember { mutableStateOf("") }
-
-    val pilihanJK = listOf("Laki-laki", "Perempuan")
     val listData = arrayListOf(txtNama, txtGender, txtAlamat)
 
     Scaffold(
@@ -52,11 +53,10 @@ fun IsiRuang(
                 colors = TopAppBarDefaults.mediumTopAppBarColors(containerColor = colorResource(id = R.color.purple_500))
             )
         }
-    ) { paddingValues ->
+    ) { isiRuang ->
         Column(
             modifier = Modifier
-                .padding(paddingValues)
-                .fillMaxWidth(),
+                .fillMaxWidth().padding(isiRuang),
             verticalArrangement = Arrangement.spacedBy(16.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
@@ -128,10 +128,3 @@ fun IsiRuang(
     }
 }
 
-@Preview(showBackground = true)
-@Composable
-fun PreviewIsiRuang() {
-    IsiRuang(
-        onSubmitButtonClicked = {}
-    )
-}
