@@ -25,54 +25,52 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.act7test.R
+import com.example.act7test.model.DataSiswa
 
-@OptIn(ExperimentalMaterial3Api::class)
+@OptIn(markerClass = ExperimentalMaterial3Api::class)
 @Composable
-fun TampilData(onBackBtnClick: () -> Unit) {
+fun TampilData(
+    statusUiSiswa: DataSiswa,
+    onBackButtonClicked: () -> Unit
+) {
     val items = listOf(
-        Pair(first = stringResource(id = R.string.nama_lengkap), second = "Bening Namira"),
-        Pair(first = stringResource(id = R.string.jenis_kelamin), second = "Laki-laki"),
-        Pair(first = stringResource(id = R.string.alamat), second = "Yogyakarta")
+        Pair(first = stringResource(R.string.nama_lengkap), second = statusUiSiswa.nama),
+        Pair(first = stringResource(R.string.jenis_kelamin), second = statusUiSiswa.gender),
+        Pair(first = stringResource(R.string.alamat), second = statusUiSiswa.alamat)
     )
 
     Scaffold(
+        modifier = Modifier,
         topBar = {
             TopAppBar(
-                title = { Text(text = stringResource(id = R.string.tampilan_data), color = Color.White) },
-                colors = TopAppBarDefaults.mediumTopAppBarColors(containerColor = colorResource(id = R.color.teal_700))
+                title = { Text(text = stringResource(id = R.string.data_siswa), color = Color.White) },
+                colors = TopAppBarDefaults.mediumTopAppBarColors(containerColor = colorResource(id = R.color.purple_500))
             )
         }
-    ) { paddingValues ->
-        IsiRuang(paddingValues = paddingValues, items = items, onBackBtnClick = onBackBtnClick)
-    }
-}
-
-@Composable
-fun IsiRuang(paddingValues: PaddingValues, items: List<Pair<String, String>>, onBackBtnClick: () -> Unit) {
-    Column(
-        modifier = Modifier
-            .padding(paddingValues)
-            .padding(dimensionResource(id = R.dimen.padding_medium)),
-        verticalArrangement = Arrangement.spacedBy(dimensionResource(id = R.dimen.padding_small))
     ) {
-        items.forEach { item ->
-            Column {
-                Text(text = item.first.uppercase(), fontSize = 16.sp)
-                Text(
-                    text = item.second,
-                    fontWeight = FontWeight.Bold,
-                    fontFamily = FontFamily.Cursive,
-                    fontSize = 22.sp
-                )
-            }
-            HorizontalDivider(thickness = 1.dp, color = Color.Gray)
-        }
-        Spacer(modifier = Modifier.height(10.dp))
-        Button(
-            modifier = Modifier.fillMaxWidth(),
-            onClick = onBackBtnClick
+        Column(
+            modifier = Modifier.padding(paddingValues),
+            verticalArrangement = Arrangement.SpaceBetween
         ) {
-            Text(text = "Back")
+            Column(
+                modifier = Modifier.padding(all = dimensionResource(R.dimen.dimen_10)),
+                verticalArrangement = Arrangement.spacedBy(space = dimensionResource(R.dimen.dimen_10))
+            ) {
+                items.forEach { item ->
+                    Column {
+                        Text(text = item.first.uppercase(), fontSize = 16.sp)
+                        Text(text = item.second, fontWeight = FontWeight.Bold, fontSize = 16.sp)
+                    }
+                }
+                Divider(thickness = dimensionResource(R.dimen.dimen_1dp))
+            }
+            Spacer(modifier = Modifier.height(dimensionResource(R.dimen.dimen_10)))
+            Button(
+                modifier = Modifier.fillMaxWidth(),
+                onClick = onBackButtonClicked
+            ) {
+                Text(text = stringResource(R.string.back))
+            }
         }
     }
 }
