@@ -31,7 +31,6 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.example.act7test.R
-import com.example.act7test.viewmodel.SiswaViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -39,12 +38,10 @@ fun Formulir(
     pilihanJK: List<String> = listOf("Laki-Laki", "Perempuan"),
     onSubmitButtonClicked: (MutableList<String>) -> Unit,
     modifier: Modifier = Modifier,
-    viewModel: SiswaViewModel
 ) {
     var txtNama by remember { mutableStateOf("") }
     var txtAlamat by remember { mutableStateOf("") }
     var txtGender by remember { mutableStateOf("") }
-    val listData = arrayListOf(txtNama, txtGender, txtAlamat)
 
     Scaffold(
         topBar = {
@@ -120,11 +117,13 @@ fun Formulir(
             Button(
                 modifier = Modifier.fillMaxWidth(fraction = 0.8f),
                 enabled = txtNama.isNotEmpty() && txtAlamat.isNotEmpty() && txtGender.isNotEmpty(),
-                onClick = { onSubmitButtonClicked(listData) }
+                onClick = {
+                    val listData = arrayListOf(txtNama, txtGender, txtAlamat)
+                    onSubmitButtonClicked(listData)
+                }
             ) {
                 Text(text = stringResource(R.string.submit))
             }
         }
     }
 }
-

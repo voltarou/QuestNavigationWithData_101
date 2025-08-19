@@ -35,7 +35,6 @@ fun DataApp(
                 val konteks = LocalContext.current
                 Formulir(
                     pilihanJK = JenisK,
-                    viewModel = viewModel,
                     onSubmitButtonClicked = {
                         viewModel.setSiswa(it)
                         navController.navigate(route = Navigasi.Detail.name)
