@@ -2,7 +2,6 @@ package com.example.act7test.view
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -20,14 +19,13 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.act7test.R
 import com.example.act7test.model.DataSiswa
 
-@OptIn(markerClass = ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TampilData(
     statusUiSiswa: DataSiswa,
@@ -47,13 +45,14 @@ fun TampilData(
                 colors = TopAppBarDefaults.mediumTopAppBarColors(containerColor = colorResource(id = R.color.purple_500))
             )
         }
-    ) {
+    ) { paddingValues ->
         Column(
-            modifier = Modifier.padding(paddingValues),
+            modifier = Modifier
+                .padding(paddingValues)
+                .padding(all = dimensionResource(R.dimen.dimen_16)),
             verticalArrangement = Arrangement.SpaceBetween
         ) {
             Column(
-                modifier = Modifier.padding(all = dimensionResource(R.dimen.dimen_10)),
                 verticalArrangement = Arrangement.spacedBy(space = dimensionResource(R.dimen.dimen_10))
             ) {
                 items.forEach { item ->
@@ -61,8 +60,8 @@ fun TampilData(
                         Text(text = item.first.uppercase(), fontSize = 16.sp)
                         Text(text = item.second, fontWeight = FontWeight.Bold, fontSize = 16.sp)
                     }
+                    HorizontalDivider(thickness = 1.dp)
                 }
-                Divider(thickness = dimensionResource(R.dimen.dimen_1dp))
             }
             Spacer(modifier = Modifier.height(dimensionResource(R.dimen.dimen_10)))
             Button(
