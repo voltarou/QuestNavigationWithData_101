@@ -32,7 +32,7 @@ import com.example.act7test.R
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun FormIsian(pilihanJK: List<String> , onSubmitBtnClick: () -> Unit) {
+fun FormIsian(pilihanJK: List<String>, onSubmitBtnClick: () -> Unit, it: String) {
     var txtNama by rememberSaveable { mutableStateOf("") }
     var txtAlamat by remember { mutableStateOf("") }
     var txtGender by remember { mutableStateOf("") }
@@ -45,85 +45,76 @@ fun FormIsian(pilihanJK: List<String> , onSubmitBtnClick: () -> Unit) {
                 colors = TopAppBarDefaults.mediumTopAppBarColors(containerColor = colorResource(id = R.color.teal_700))
             )
         }
-    ) { paddingValues ->
-        IsiRuang(
-            paddingValues = paddingValues,
-            namaLengkap = namaLengkap,
-            onNamaLengkapChange = { namaLengkap = it },
-            alamat = alamat,
-            onAlamatChange = { alamat = it },
-            jenisK = jenisK,
-            jenisKelamin = jenisKelamin,
-            onJenisKelaminSelected = { jenisKelamin = it },
-            onSubmitBtnClick = onSubmitBtnClick,
-        )
+    ) { isiRuang ->
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(20.dp),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.spacedBy(16.dp)
+        ) {
+            OutlinedTextField(
+                value = txtNama,
+                onValueChange = { txtNama = it },
+                singleLine = true,
+                modifier = Modifier.fillMaxWidth(),
+                label = { Text(text = "Nama Lengkap") }
+            )
+
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.spacedBy(16.dp),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Text("Jenis Kelamin:", modifier = Modifier.weight(1f))
+                pilihanJK.forEach { item ->
+                    Row(
+
+                        verticalAlignment = Alignment.CenterVertically,
+                        modifier = Modifier.weight(1f)
+                    ) {
+                        RadioButton(
+                            selected = txtGender == item,
+                            onClick = { txtGender = item }
+                        )
+                        Text(text = item)
+                    }
+                }
+            }
+
+            OutlinedTextField(
+                value = txtAlamat,
+                onValueChange = { txtAlamat = it },
+                singleLine = true,
+                modifier = Modifier.fillMaxWidth(),
+                label = { Text(text = "Alamat") }
+            )
+
+            Spacer(modifier = Modifier.height(20.dp))
+
+            Button(
+                onClick = {onSubmitBtnClick(listData)},
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                Text(text = stringResource(id = R.string.submit))
+            }
+        }
     }
 }
 
 @Composable
 fun IsiRuang(
     paddingValues: PaddingValues,
+    txtNama: String,
+    txtAlamat: String,
     onNamaLengkapChange: (String) -> Unit,
-    alamat: String,
     onAlamatChange: (String) -> Unit,
     jenisK: List<String>,
     jenisKelamin: String,
     onJenisKelaminSelected: (String) -> Unit,
     onSubmitBtnClick: () -> Unit,
-    txtNama: String
+    listData: MutableList<String> = mutableListOf(txtNama,jenisKelamin,txtAlamat)
+
 ) {
-    Column(
-        modifier = Modifier
-            .padding(paddingValues)
-            .fillMaxWidth()
-            .padding(20.dp),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.spacedBy(16.dp)
-    ) {
-        OutlinedTextField(
-            value = txtNama,
-            onValueChange = onNamaLengkapChange,
-            singleLine = true,
-            modifier = Modifier.fillMaxWidth(),
-            label = { Text(text = "Nama Lengkap") }
-        )
 
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.spacedBy(16.dp),
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            Text("Jenis Kelamin:", modifier = Modifier.weight(1f))
-            jenisK.forEach { item ->
-                Row(
-
-                    verticalAlignment = Alignment.CenterVertically,
-                    modifier = Modifier.weight(1f)
-                ) {
-                    RadioButton(
-                        selected = jenisKelamin == item,
-                        onClick = { onJenisKelaminSelected(item) }
-                    )
-                    Text(text = item)
-                }
-            }
-        }
-
-        OutlinedTextField(
-            value = alamat,
-            onValueChange = onAlamatChange,
-            singleLine = true,
-            modifier = Modifier.fillMaxWidth(),
-            label = { Text(text = "Alamat") }
-        )
-
-        Spacer(modifier = Modifier.height(20.dp))
-
-        Button(
-            onClick = onSubmitBtnClick,
-            modifier = Modifier.fillMaxWidth()
-        ) {
-            Text(text = stringResource(id = R.string.submit))
-        }
-    }
 }
