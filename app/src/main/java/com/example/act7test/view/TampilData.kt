@@ -24,25 +24,28 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.act7test.R
 import com.example.act7test.model.DataSiswa
+import com.example.act7test.viewmodel.SiswaViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TampilData(
     statusUiSiswa: DataSiswa,
+    viewModel: SiswaViewModel,
     onBackButtonClicked: () -> Unit
 ) {
     val items = listOf(
-        Pair(first = stringResource(R.string.nama_lengkap), second = statusUiSiswa.nama),
-        Pair(first = stringResource(R.string.jenis_kelamin), second = statusUiSiswa.gender),
-        Pair(first = stringResource(R.string.alamat), second = statusUiSiswa.alamat)
+        Pair(stringResource(R.string.nama_lengkap), statusUiSiswa.nama),
+        Pair(stringResource(R.string.jenis_kelamin), statusUiSiswa.gender),
+        Pair(stringResource(R.string.alamat), statusUiSiswa.alamat)
     )
 
     Scaffold(
-        modifier = Modifier,
         topBar = {
             TopAppBar(
                 title = { Text(text = stringResource(id = R.string.data_siswa), color = Color.White) },
-                colors = TopAppBarDefaults.mediumTopAppBarColors(containerColor = colorResource(id = R.color.purple_500))
+                colors = TopAppBarDefaults.mediumTopAppBarColors(
+                    containerColor = colorResource(id = R.color.purple_500)
+                )
             )
         }
     ) { paddingValues ->
@@ -53,7 +56,7 @@ fun TampilData(
             verticalArrangement = Arrangement.SpaceBetween
         ) {
             Column(
-                verticalArrangement = Arrangement.spacedBy(space = dimensionResource(R.dimen.dimen_10))
+                verticalArrangement = Arrangement.spacedBy(dimensionResource(R.dimen.dimen_10))
             ) {
                 items.forEach { item ->
                     Column {
