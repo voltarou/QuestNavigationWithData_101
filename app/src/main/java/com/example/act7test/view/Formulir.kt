@@ -19,6 +19,7 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -31,13 +32,11 @@ import com.example.act7test.R
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun FormIsian(
-    pilihanJK: List<String>,
-    onSubmitBtnClick: (String, String, String) -> Unit
-) {
+fun FormIsian(pilihanJK: List<String> , onSubmitBtnClick: () -> Unit) {
     var txtNama by rememberSaveable { mutableStateOf("") }
-    var txtAlamat by rememberSaveable { mutableStateOf("") }
-    var txtGender by rememberSaveable { mutableStateOf("") }
+    var txtAlamat by remember { mutableStateOf("") }
+    var txtGender by remember { mutableStateOf("") }
+    val listData: MutableList<String> = mutableListOf(txtNama,txtGender,txtAlamat)
 
     Scaffold(
         topBar = {
@@ -49,14 +48,14 @@ fun FormIsian(
     ) { paddingValues ->
         IsiRuang(
             paddingValues = paddingValues,
-            namaLengkap = txtNama,
-            onNamaLengkapChange = { txtNama = it },
-            alamat = txtAlamat,
-            onAlamatChange = { txtAlamat = it },
-            jenisK = pilihanJK,
-            jenisKelamin = txtGender,
-            onJenisKelaminSelected = { txtGender = it },
-            onSubmitBtnClick = { onSubmitBtnClick(txtNama, txtAlamat, txtGender) }
+            namaLengkap = namaLengkap,
+            onNamaLengkapChange = { namaLengkap = it },
+            alamat = alamat,
+            onAlamatChange = { alamat = it },
+            jenisK = jenisK,
+            jenisKelamin = jenisKelamin,
+            onJenisKelaminSelected = { jenisKelamin = it },
+            onSubmitBtnClick = onSubmitBtnClick,
         )
     }
 }
@@ -64,14 +63,14 @@ fun FormIsian(
 @Composable
 fun IsiRuang(
     paddingValues: PaddingValues,
-    namaLengkap: String,
     onNamaLengkapChange: (String) -> Unit,
     alamat: String,
     onAlamatChange: (String) -> Unit,
     jenisK: List<String>,
     jenisKelamin: String,
     onJenisKelaminSelected: (String) -> Unit,
-    onSubmitBtnClick: () -> Unit
+    onSubmitBtnClick: () -> Unit,
+    txtNama: String
 ) {
     Column(
         modifier = Modifier
@@ -82,7 +81,7 @@ fun IsiRuang(
         verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
         OutlinedTextField(
-            value = namaLengkap,
+            value = txtNama,
             onValueChange = onNamaLengkapChange,
             singleLine = true,
             modifier = Modifier.fillMaxWidth(),
@@ -97,6 +96,7 @@ fun IsiRuang(
             Text("Jenis Kelamin:", modifier = Modifier.weight(1f))
             jenisK.forEach { item ->
                 Row(
+
                     verticalAlignment = Alignment.CenterVertically,
                     modifier = Modifier.weight(1f)
                 ) {
