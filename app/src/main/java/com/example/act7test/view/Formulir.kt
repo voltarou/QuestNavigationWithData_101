@@ -20,6 +20,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -32,10 +33,10 @@ import com.example.act7test.R
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun FormIsian(pilihanJK: List<String> , onSubmitBtnClick: () -> Unit) {
-    val jenisK = listOf("Laki-laki", "Perempuan")
-    var namaLengkap by remember { mutableStateOf("") }
-    var alamat by remember { mutableStateOf("") }
-    var jenisKelamin by remember { mutableStateOf("") }
+    var txtNama by rememberSaveable { mutableStateOf("") }
+    var txtAlamat by remember { mutableStateOf("") }
+    var txtGender by remember { mutableStateOf("") }
+    val listData: MutableList<String> = mutableListOf(txtNama,txtGender,txtAlamat)
 
     Scaffold(
         topBar = {
@@ -80,7 +81,7 @@ fun IsiRuang(
         verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
         OutlinedTextField(
-            value = namaLengkap,
+            value = txtNama,
             onValueChange = onNamaLengkapChange,
             singleLine = true,
             modifier = Modifier.fillMaxWidth(),
