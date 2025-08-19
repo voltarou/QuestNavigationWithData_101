@@ -10,8 +10,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.selection.selectable
 import androidx.compose.material3.Button
-import androidx.compose.material3.Divider
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.RadioButton
@@ -43,7 +43,7 @@ fun IsiRuang(
     var txtGender by remember { mutableStateOf("") }
 
     val pilihanJK = listOf("Laki-laki", "Perempuan")
-    val listData = arrayListOf<String>(txtNama, txtGender, txtAlamat)
+    val listData = arrayListOf(txtNama, txtGender, txtAlamat)
 
     Scaffold(
         topBar = {
@@ -69,7 +69,7 @@ fun IsiRuang(
                 onValueChange = { txtNama = it }
             )
 
-            Divider(
+            HorizontalDivider(
                 thickness = 1.dp,
                 modifier = Modifier
                     .padding(all = 12.dp)
@@ -99,7 +99,7 @@ fun IsiRuang(
                 }
             }
 
-            Divider(
+            HorizontalDivider(
                 thickness = 1.dp,
                 modifier = Modifier
                     .padding(all = 5.dp)
