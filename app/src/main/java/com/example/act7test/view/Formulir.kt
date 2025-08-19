@@ -32,11 +32,13 @@ import com.example.act7test.R
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun FormIsian(pilihanJK: List<String> , onSubmitBtnClick: () -> Unit) {
+fun FormIsian(
+    pilihanJK: List<String>,
+    onSubmitBtnClick: (String, String, String) -> Unit
+) {
     var txtNama by rememberSaveable { mutableStateOf("") }
-    var txtAlamat by remember { mutableStateOf("") }
-    var txtGender by remember { mutableStateOf("") }
-    val listData: MutableList<String> = mutableListOf(txtNama,txtGender,txtAlamat)
+    var txtAlamat by rememberSaveable { mutableStateOf("") }
+    var txtGender by rememberSaveable { mutableStateOf("") }
 
     Scaffold(
         topBar = {
@@ -48,14 +50,14 @@ fun FormIsian(pilihanJK: List<String> , onSubmitBtnClick: () -> Unit) {
     ) { paddingValues ->
         IsiRuang(
             paddingValues = paddingValues,
-            namaLengkap = namaLengkap,
-            onNamaLengkapChange = { namaLengkap = it },
-            alamat = alamat,
-            onAlamatChange = { alamat = it },
-            jenisK = jenisK,
-            jenisKelamin = jenisKelamin,
-            onJenisKelaminSelected = { jenisKelamin = it },
-            onSubmitBtnClick = onSubmitBtnClick
+            namaLengkap = txtNama,
+            onNamaLengkapChange = { txtNama = it },
+            alamat = txtAlamat,
+            onAlamatChange = { txtAlamat = it },
+            jenisK = pilihanJK,
+            jenisKelamin = txtGender,
+            onJenisKelaminSelected = { txtGender = it },
+            onSubmitBtnClick = { onSubmitBtnClick(txtNama, txtAlamat, txtGender) }
         )
     }
 }
@@ -81,7 +83,7 @@ fun IsiRuang(
         verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
         OutlinedTextField(
-            value = txtNama,
+            value = namaLengkap,
             onValueChange = onNamaLengkapChange,
             singleLine = true,
             modifier = Modifier.fillMaxWidth(),
